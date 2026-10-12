@@ -25,7 +25,7 @@
 
 ## 3. Pre-Configured Demo Accounts (CS · Semester 5 & Admins)
 
-Password for all demo accounts: `miet123`
+
 
 ### Students (CS · Semester 5)
 - **Gauri:** `gauri@miet.ac.in` (Roll: `2200680100041`)
