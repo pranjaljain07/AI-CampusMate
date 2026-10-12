@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Dashboard | AI CampusMate (MIET)</title>
+  <meta name="description" content="AI CampusMate Student Dashboard - Intelligent College Assistant connected with MySQL and Google Gemini API at MIET Meerut." />
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div>
+        <div class="sidebar-brand">
+          <div class="brand-icon-box">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+              <path d="M2 17l10 5 10-5"></path>
+              <path d="M2 12l10 5 10-5"></path>
+            </svg>
+          </div>
+          <div>
+            <span class="sidebar-brand-title">AI CampusMate</span>
+            <span class="sidebar-brand-sub">MIET Meerut · B.Tech CS Sem 5</span>
+          </div>
+        </div>
+
+        <nav class="sidebar-nav" aria-label="Student Dashboard Sections">
+          <button type="button" class="sidebar-link active" data-tab="overview">
+            <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            <span>Academic Overview</span>
+          </button>
+
+          <button type="button" class="sidebar-link" data-tab="attendance">
+            <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            <span>Attendance Ledger</span>
+          </button>
+
+          <button type="button" class="sidebar-link" data-tab="timetable">
+            <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span>Class Timetable</span>
+          </button>
+
+          <button type="button" class="sidebar-link" data-tab="assignments">
+            <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+              <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+              <path d="M9 12h6"></path>
+              <path d="M9 16h6"></path>
+            </svg>
+            <span>Assignments &amp; Labs</span>
+          </button>
+
+          <button type="button" class="sidebar-link" data-tab="exams">
+            <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="8" r="7"></circle>
+              <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+            </svg>
+            <span>Exams &amp; Results</span>
+          </button>
+
+          <button type="button" class="sidebar-link" data-tab="notices">
+            <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+            <span>Notices &amp; AI Summarizer</span>
+          </button>
+
+          <button type="button" class="sidebar-link" data-tab="events">
+            <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <span>Campus Events</span>
+          </button>
+
+          <button type="button" class="sidebar-link sidebar-link-ai" data-tab="assistant">
+            <svg class="nav-icon nav-icon-sparkle" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"></path>
+            </svg>
+            <span>AI CampusMate Chat</span>
+          </button>
+        </nav>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user-card">
+          <div id="sidebar-student-avatar" class="sidebar-avatar">--</div>
+          <div class="sidebar-user-details">
+            <div id="sidebar-student-name" class="sidebar-user-name">Loading Student...</div>
+            <div id="sidebar-student-meta" class="sidebar-user-meta">Branch: CS · Semester 5</div>
+          </div>
+        </div>
+        <button type="button" id="logout-btn" class="btn btn-secondary btn-block btn-sm sidebar-logout-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span>Sign Out</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- WORKSPACE MAIN -->
+    <div class="workspace-main">
+      <header class="topbar">
+        <div class="topbar-left">
+          <a href="/student/dashboard" class="topbar-brand">
+            <span class="portal-badge">MIET</span>
+            <span class="portal-title">Student Academic Portal</span>
+          </a>
+        </div>
+
+        <nav class="topbar-nav" aria-label="Quick Navigation">
+          <button type="button" class="topbar-nav-link active" data-tab="overview">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            <span>Overview</span>
+          </button>
+          <button type="button" class="topbar-nav-link" data-tab="attendance">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            <span>Attendance</span>
+          </button>
+          <button type="button" class="topbar-nav-link" data-tab="timetable">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <span>Timetable</span>
+          </button>
+          <button type="button" class="topbar-nav-link" data-tab="exams">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+            <span>Results</span>
+          </button>
+          <button type="button" class="topbar-nav-link" data-tab="notices">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+            <span>Notices</span>
+          </button>
+        </nav>
+
+        <div class="topbar-actions">
+          <button type="button" class="btn btn-ai-action btn-sm" data-tab="assistant">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            <span>Ask AI CampusMate</span>
+          </button>
+        </div>
+      </header>
+
+      <main class="viewport-container">
+        <!-- Low Attendance Alert -->
+        <div id="low-attendance-alert" class="alert-banner alert-warning hidden"></div>
+
+        <!-- TAB 1: ACADEMIC OVERVIEW -->
+        <section id="tab-overview" class="tab-panel">
+          <div class="section-header">
+            <div class="section-header-main">
+              <h1 id="welcome-heading" class="section-title">Student Academic Dashboard</h1>
+              <div id="student-profile-meta" class="meta-inline">
+                <span>Branch: CS</span>
+                <span class="meta-sep">·</span>
+                <span>Semester: 5</span>
+              </div>
+            </div>
+            <div class="db-badge-wrap">
+              <span class="db-live-pill">
+                <span class="live-dot"></span>
+                <span>MySQL Connected: <code>ai_database</code></span>
+              </span>
+            </div>
+          </div>
+
+          <!-- SMART CAMPUS KPI CARDS -->
+          <div class="kpi-strip">
+            <!-- 1. Attendance Card -->
+            <div class="kpi-cell kpi-card-attendance">
+              <div class="kpi-header-row">
+                <span class="kpi-label">Aggregate Attendance</span>
+                <div class="kpi-icon-badge kpi-badge-att">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                  </svg>
+                </div>
+              </div>
+              <div class="kpi-value-wrap">
+                <div id="kpi-attendance" class="kpi-value">--%</div>
+                <span id="kpi-attendance-badge" class="kpi-standing-pill">--</span>
+              </div>
+              <div class="kpi-progress-track">
+                <div id="kpi-attendance-bar" class="kpi-progress-fill bar-green" style="width: 0%"></div>
+              </div>
+              <div id="kpi-attendance-sub" class="kpi-sub">Minimum 75% required for PUT</div>
+            </div>
+
+            <!-- 2. SGPA Card -->
+            <div class="kpi-cell kpi-card-sgpa">
+              <div class="kpi-header-row">
+                <span class="kpi-label">Current Semester SGPA</span>
+                <div class="kpi-icon-badge kpi-badge-sgpa">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                  </svg>
+                </div>
+              </div>
+              <div class="kpi-value-wrap">
+                <div id="kpi-sgpa" class="kpi-value text-indigo">--</div>
+                <span class="kpi-standing-pill pill-indigo">Scale 10.0</span>
+              </div>
+              <div class="kpi-sub kpi-sub-accent">B.Tech CS · Semester 5 Academic Performance</div>
+            </div>
+
+            <!-- 3. CGPA Card -->
+            <div class="kpi-cell kpi-card-cgpa">
+              <div class="kpi-header-row">
+                <span class="kpi-label">Cumulative CGPA</span>
+                <div class="kpi-icon-badge kpi-badge-cgpa">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="8" r="7"></circle>
+                    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                  </svg>
+                </div>
+              </div>
+              <div class="kpi-value-wrap">
+                <div id="kpi-cgpa" class="kpi-value text-violet">--</div>
+                <span class="kpi-standing-pill pill-violet">Cumulative</span>
+              </div>
+              <div id="kpi-advisor" class="kpi-sub">Advisor: --</div>
+            </div>
+
+            <!-- 4. Pending Coursework Card -->
+            <div class="kpi-cell kpi-card-assignments">
+              <div class="kpi-header-row">
+                <span class="kpi-label">Pending Coursework</span>
+                <div class="kpi-icon-badge kpi-badge-assign">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                    <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                    <line x1="9" y1="12" x2="15" y2="12"></line>
+                    <line x1="9" y1="16" x2="13" y2="16"></line>
+                  </svg>
+                </div>
+              </div>
+              <div class="kpi-value-wrap">
+                <div id="kpi-assignments" class="kpi-value text-amber">0</div>
+                <span class="kpi-standing-pill pill-amber">Assignments</span>
+              </div>
+              <div id="kpi-exams-sub" class="kpi-sub">Upcoming PUT Exams</div>
+            </div>
+          </div>
+
+          <!-- GRID 1: Attendance Table & Today's Schedule -->
+          <div class="grid-2col">
+            <div class="surface-panel">
+              <div class="panel-header">
+                <div>
+                  <h2 class="panel-title">Subject-Wise Attendance Summary</h2>
+                  <p class="panel-subtitle">Current standing across all active CS Sem 5 courses</p>
+                </div>
+                <button type="button" class="btn btn-secondary btn-sm" data-tab="attendance">Full Ledger &rarr;</button>
+              </div>
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Code</th>
+                      <th>Subject</th>
+                      <th class="num-col">Classes</th>
+                      <th class="num-col">Percentage</th>
+                      <th>Standing</th>
+                    </tr>
+                  </thead>
+                  <tbody id="overview-attendance-body"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="surface-panel">
+              <div class="panel-header">
+                <div>
+                  <h2 id="today-schedule-title" class="panel-title">Today's Classes</h2>
+                  <p class="panel-subtitle">Real-time daily lecture &amp; lab schedule</p>
+                </div>
+                <button type="button" class="btn btn-secondary btn-sm" data-tab="timetable">Weekly View &rarr;</button>
+              </div>
+              <div id="overview-today-classes" class="feed-list"></div>
+            </div>
+          </div>
+
+          <!-- GRID 2: Latest Notices & Student Profile -->
+          <div class="grid-equal">
+            <div class="surface-panel">
+              <div class="panel-header">
+                <div>
+                  <h2 class="panel-title">Latest Official Circulars</h2>
+                  <p class="panel-subtitle">Official notifications from Director &amp; HOD CSE</p>
+                </div>
+                <button type="button" class="btn btn-ai-action btn-sm" data-tab="notices">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"></path></svg>
+                  <span>Summarize with AI</span>
+                </button>
+              </div>
+              <div id="overview-notices-list" class="feed-list"></div>
+            </div>
+
+            <div class="surface-panel">
+              <div class="panel-header">
+                <div>
+                  <h2 class="panel-title">Verified Student Profile (MySQL Record)</h2>
+                  <p class="panel-subtitle">Direct institutional record from <code>ai_database.students</code></p>
+                </div>
+                <div class="db-pill-small">
+                  <span class="live-dot"></span>
+                  <span>MySQL DB</span>
+                </div>
+              </div>
+              <div class="profile-preview-card">
+                <div class="profile-header-banner">
+                  <div id="profile-avatar" class="profile-initials-avatar">--</div>
+                  <div class="profile-header-meta">
+                    <h3 id="profile-card-name" class="profile-name">Student Profile</h3>
+                    <div id="profile-card-roll" class="profile-roll-meta">Roll No: --</div>
+                  </div>
+                </div>
+                <div class="table-wrap">
+                  <table class="data-table profile-table">
+                    <tbody id="student-profile-table"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 2: ATTENDANCE LEDGER -->
+        <section id="tab-attendance" class="tab-panel hidden">
+          <div class="section-header">
+            <div>
+              <h1 class="section-title">Subject-Wise Attendance Ledger</h1>
+              <p class="section-subtitle">Personalized attendance record retrieved for your student ID from MySQL. AKTU requires minimum 75% aggregate to appear for Pre-University Tests (PUT) and End-Semester Examinations.</p>
+            </div>
+            <div class="db-badge-wrap">
+              <span class="db-live-pill">
+                <span class="live-dot"></span>
+                <span>Live AKTU Eligibility Tracker</span>
+              </span>
+            </div>
+          </div>
+          <div class="surface-panel">
+            <div class="table-wrap">
+              <table class="data-table attendance-ledger-table">
+                <thead>
+                  <tr>
+                    <th>Subject Code</th>
+                    <th>Subject Name</th>
+                    <th>Faculty Member</th>
+                    <th class="num-col">Attended</th>
+                    <th class="num-col">Total Conducted</th>
+                    <th class="num-col" style="min-width: 170px;">Attendance %</th>
+                    <th>AKTU Eligibility Status</th>
+                  </tr>
+                </thead>
+                <tbody id="full-attendance-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 3: TIMETABLE -->
+        <section id="tab-timetable" class="tab-panel hidden">
+          <div class="section-header">
+            <div>
+              <h1 class="section-title">B.Tech CS (Semester 5) Weekly Timetable</h1>
+              <p class="section-subtitle">Filter lectures, tutorials, and laboratory sessions by day of the week.</p>
+            </div>
+            <div id="timetable-day-filter" class="segmented-bar">
+              <button type="button" class="segmented-btn active" data-day="ALL">All Days</button>
+              <button type="button" class="segmented-btn" data-day="Monday">Monday</button>
+              <button type="button" class="segmented-btn" data-day="Tuesday">Tuesday</button>
+              <button type="button" class="segmented-btn" data-day="Wednesday">Wednesday</button>
+              <button type="button" class="segmented-btn" data-day="Thursday">Thursday</button>
+              <button type="button" class="segmented-btn" data-day="Friday">Friday</button>
+              <button type="button" class="segmented-btn" data-day="Saturday">Saturday</button>
+            </div>
+          </div>
+          <div class="surface-panel">
+            <div class="table-wrap">
+              <table class="data-table timetable-table">
+                <thead>
+                  <tr>
+                    <th>Day</th>
+                    <th>Time Slot</th>
+                    <th>Code</th>
+                    <th>Subject</th>
+                    <th>Session Type</th>
+                    <th>Faculty</th>
+                    <th>Classroom / Lab</th>
+                  </tr>
+                </thead>
+                <tbody id="timetable-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 4: ASSIGNMENTS -->
+        <section id="tab-assignments" class="tab-panel hidden">
+          <div class="section-header">
+            <div>
+              <h1 class="section-title">Pending Coursework &amp; Assignments</h1>
+              <p class="section-subtitle">CS Semester 5 subject assignments, deadlines, faculty details, and maximum marks.</p>
+            </div>
+          </div>
+          <div class="surface-panel">
+            <div id="assignments-list-container" class="feed-list"></div>
+          </div>
+        </section>
+
+        <!-- TAB 5: EXAMS & RESULTS -->
+        <section id="tab-exams" class="tab-panel hidden">
+          <div class="section-header">
+            <div>
+              <h1 class="section-title">Academic Results (SGPA / CGPA) &amp; Examination Schedule</h1>
+              <p class="section-subtitle">Personalized internal and external marks alongside upcoming PUT examination dates.</p>
+            </div>
+          </div>
+
+          <div class="surface-panel">
+            <div class="panel-header">
+              <div class="results-header-left">
+                <h2 class="panel-title">Personalized Subject Marks &amp; Grade Card</h2>
+                <p class="panel-subtitle">Comprehensive breakdown of internal assessments and external university marks</p>
+              </div>
+              <div id="results-gpa-summary" class="meta-inline results-summary-box"></div>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table results-table">
+                <thead>
+                  <tr>
+                    <th>Code</th>
+                    <th>Subject Name</th>
+                    <th class="num-col">Credits</th>
+                    <th class="num-col">Internal (30)</th>
+                    <th class="num-col">External (70)</th>
+                    <th class="num-col">Total (100)</th>
+                    <th>Grade</th>
+                    <th class="num-col">Grade Points</th>
+                  </tr>
+                </thead>
+                <tbody id="results-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="surface-panel">
+            <div class="panel-header">
+              <div>
+                <h2 class="panel-title">Upcoming Examination Schedule (CS Semester 5)</h2>
+                <p class="panel-subtitle">Pre-University Test (PUT) and AKTU End-Semester Exam time-table</p>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table exams-table">
+                <thead>
+                  <tr>
+                    <th>Exam Date</th>
+                    <th>Time</th>
+                    <th>Code</th>
+                    <th>Subject</th>
+                    <th>Examination Hall</th>
+                    <th class="num-col">Max Marks</th>
+                    <th>Syllabus Coverage</th>
+                  </tr>
+                </thead>
+                <tbody id="exams-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 6: NOTICES & AI SUMMARIZER -->
+        <section id="tab-notices" class="tab-panel hidden">
+          <div class="section-header">
+            <div>
+              <h1 class="section-title">Official College Notices &amp; Gemini AI Circular Summarizer</h1>
+              <p class="section-subtitle">Click "Summarize Circular with Gemini AI" on any notice to extract key takeaways, deadlines, and student action items.</p>
+            </div>
+            <div class="ai-powered-badge">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              <span>Gemini 2.5 AI Powered</span>
+            </div>
+          </div>
+          <div class="surface-panel">
+            <div id="notices-full-list" class="feed-list"></div>
+          </div>
+        </section>
+
+        <!-- TAB 7: CAMPUS EVENTS -->
+        <section id="tab-events" class="tab-panel hidden">
+          <div class="section-header">
+            <div>
+              <h1 class="section-title">MIET Campus Events, Hackathons &amp; Seminars</h1>
+              <p class="section-subtitle">Technical symposiums, cultural conclaves, and placement bootcamps across campus.</p>
+            </div>
+          </div>
+          <div class="surface-panel">
+            <div id="events-full-list" class="feed-list"></div>
+          </div>
+        </section>
+
+        <!-- TAB 8: AI CAMPUSMATE CONVERSATIONAL ASSISTANT -->
+        <section id="tab-assistant" class="tab-panel hidden">
+          <div class="section-header">
+            <div>
+              <h1 class="section-title">AI CampusMate — Conversational College Assistant</h1>
+              <p class="section-subtitle">Powered by Google Gemini API and grounded with your live MySQL academic records.</p>
+            </div>
+            <div class="gemini-status-pill">
+              <span class="pulse-dot"></span>
+              <span>Grounded with live MySQL records</span>
+            </div>
+          </div>
+
+          <div class="chat-layout">
+            <div class="chat-window">
+              <div class="chat-top-header">
+                <div class="chat-bot-avatar">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  </svg>
+                </div>
+                <div>
+                  <div class="chat-top-title">AI CampusMate Assistant</div>
+                  <div class="chat-top-sub">Grounded with student database: <code>ai_database</code></div>
+                </div>
+              </div>
+
+              <div id="chat-messages" class="chat-messages">
+                <div class="chat-bubble chat-bubble-ai">
+                  <div class="chat-bubble-sender">
+                    <span class="ai-spark-icon">✨</span>
+                    <span>AI CampusMate · MIET Assistant</span>
+                  </div>
+                  <div>Hello! I am connected to your live MySQL academic profile in <code>ai_database</code>. Ask me about your timetable today, subject-wise attendance, low-attendance warnings, pending assignments, exam dates, SGPA/CGPA results, or important notices.</div>
+                </div>
+              </div>
+
+              <form id="chat-form" class="chat-input-bar">
+                <div class="chat-input-wrap">
+                  <input
+                    type="text"
+                    id="chat-input"
+                    class="form-input chat-input-field"
+                    placeholder="Ask e.g. 'What is my attendance and which subject has low attendance?'"
+                    required
+                  />
+                </div>
+                <button type="submit" id="chat-send-btn" class="btn btn-primary chat-submit-btn">
+                  <span>Send Question</span>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                  </svg>
+                </button>
+              </form>
+            </div>
+
+            <div class="surface-panel suggested-queries-panel" style="margin-bottom: 0;">
+              <div class="panel-header">
+                <div>
+                  <h2 class="panel-title">Suggested Academic Queries</h2>
+                  <p class="panel-subtitle">Click any prompt to ask Gemini instantly</p>
+                </div>
+              </div>
+              <div class="prompt-suggestions">
+                <button type="button" class="prompt-btn" data-prompt="What is my timetable today and what classes do I have?">
+                  <span class="prompt-icon">📅</span>
+                  <span>What is my timetable today?</span>
+                </button>
+                <button type="button" class="prompt-btn" data-prompt="What is my attendance across all subjects?">
+                  <span class="prompt-icon">📊</span>
+                  <span>What is my attendance?</span>
+                </button>
+                <button type="button" class="prompt-btn" data-prompt="Which subject has low attendance below 75%?">
+                  <span class="prompt-icon">⚠️</span>
+                  <span>Which subject has low attendance?</span>
+                </button>
+                <button type="button" class="prompt-btn" data-prompt="What assignments are pending and when are their deadlines?">
+                  <span class="prompt-icon">📝</span>
+                  <span>What assignments are pending?</span>
+                </button>
+                <button type="button" class="prompt-btn" data-prompt="When are my upcoming PUT examinations?">
+                  <span class="prompt-icon">🎯</span>
+                  <span>When are my upcoming exams?</span>
+                </button>
+                <button type="button" class="prompt-btn" data-prompt="What is my SGPA, CGPA, and subject-wise marks?">
+                  <span class="prompt-icon">🏆</span>
+                  <span>What is my SGPA and CGPA?</span>
+                </button>
+                <button type="button" class="prompt-btn" data-prompt="What are the important college notices and deadlines?">
+                  <span class="prompt-icon">📢</span>
+                  <span>What are the important notices?</span>
+                </button>
+                <button type="button" class="prompt-btn" data-prompt="What campus events are coming up at MIET?">
+                  <span class="prompt-icon">🎪</span>
+                  <span>What events are coming up?</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="/static/js/student.js"></script>
+</body>
+</html>

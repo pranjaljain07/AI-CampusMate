@@ -1,0 +1,8 @@
+{
+  "name": "AI CampusMate",
+  "description": "An intelligent college assistant using Flask and Gemini to provide students with real-time academic information via MySQL.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

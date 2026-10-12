@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI CampusMate – Intelligent College Assistant (MIET)</title>
+  <meta name="description" content="Official Intelligent College Assistant and Academic Portal for Meerut Institute of Engineering and Technology (MIET)." />
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+  <div class="login-shell">
+    <section class="login-brand-panel">
+      <div>
+        <p class="institute-kicker">Meerut Institute of Engineering and Technology · Department of CSE</p>
+        <h1 class="login-hero-title">AI CampusMate — Intelligent College Assistant</h1>
+        <p class="login-hero-subtitle">
+          A unified academic management platform and Google Gemini-powered conversational assistant connected to MIET's relational MySQL database (<code>ai_database</code>) for real-time attendance, timetable, results, circulars, and coursework.
+        </p>
+      </div>
+
+      <div>
+        <div class="architecture-flow">
+          <div class="arch-item">
+            <div class="arch-item-title">01. Personalized Student Isolation</div>
+            <div class="arch-item-desc">Individual CS Semester 5 records for Gauri, Harshi, Pranjal, and Manvi retrieved by authenticated database ID.</div>
+          </div>
+          <div class="arch-item">
+            <div class="arch-item-title">02. Real-Time MySQL CRUD</div>
+            <div class="arch-item-desc">Faculty administrators manage notices, assignments, lectures, attendance, SGPA/CGPA results, and campus events.</div>
+          </div>
+          <div class="arch-item">
+            <div class="arch-item-title">03. Grounded Gemini AI Assistant</div>
+            <div class="arch-item-desc">Answers natural-language queries using live student attendance, timetable, and exam records from MySQL.</div>
+          </div>
+          <div class="arch-item">
+            <div class="arch-item-title">04. AI Circular Summarizer</div>
+            <div class="arch-item-desc">Extracts executive bullet points, compliance deadlines, and student action items from official notices.</div>
+          </div>
+        </div>
+        <p style="font-size: 12px; color: #94A3B8; margin-top: 1.5rem;">
+          B.Tech Academic Project · Stack: HTML5 · CSS3 · Vanilla JavaScript · Python Flask · MySQL · Google Gemini API
+        </p>
+      </div>
+    </section>
+
+    <section class="login-form-panel">
+      <div class="login-card">
+        <h2 class="login-card-title">Sign in to MIET Portal</h2>
+        <p class="login-card-desc">Authenticate with your institutional account, roll number, or click any profile button below.</p>
+
+        
+
+        <div id="login-error" class="alert-banner alert-error hidden"></div>
+
+        <form id="login-form" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="email">Email, Roll Number, or Name</label>
+            <input
+              type="text"
+              id="email"
+              name="email"
+              class="form-input"
+              placeholder="e.g. pranjal@miet.ac.in, 2200680100094, or Pranjal"
+              required
+              autocomplete="username"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="password">Password </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="form-input"
+              placeholder="Enter password "
+              required
+              autocomplete="current-password"
+            />
+          </div>
+
+          <button type="submit" id="login-submit-btn" class="btn btn-primary btn-block" style="margin-top: 0.5rem;">
+            Sign In to Dashboard
+          </button>
+        </form>
+
+        <div class="quick-login-section">
+          <div class="quick-login-heading">Project Demonstration Profiles (CS · Semester 5 &amp; Faculty Admins)</div>
+          <div class="quick-grid">
+            <button type="button" class="quick-account-btn" data-email="gauri@miet.ac.in" data-pass="miet123">
+              <span class="quick-account-name">Gauri (Student)</span>
+              <span class="quick-account-meta">CS Sem 5 · SGPA 8.92 · gauri@miet.ac.in</span>
+            </button>
+            <button type="button" class="quick-account-btn" data-email="harshi@miet.ac.in" data-pass="miet123">
+              <span class="quick-account-name">Harshi (Student)</span>
+              <span class="quick-account-meta">CS Sem 5 · SGPA 8.35 · harshi@miet.ac.in</span>
+            </button>
+            <button type="button" class="quick-account-btn" data-email="pranjal@miet.ac.in" data-pass="miet123">
+              <span class="quick-account-name">Pranjal (Student)</span>
+              <span class="quick-account-meta">CS Sem 5 · SGPA 9.24 · pranjal@miet.ac.in</span>
+            </button>
+            <button type="button" class="quick-account-btn" data-email="manvi@miet.ac.in" data-pass="miet123">
+              <span class="quick-account-name">Manvi (Student)</span>
+              <span class="quick-account-meta">CS Sem 5 · SGPA 7.88 · manvi@miet.ac.in</span>
+            </button>
+            <button type="button" class="quick-account-btn" data-email="sk.sharma@miet.ac.in" data-pass="miet123">
+              <span class="quick-account-name">Dr. S. K. Sharma (Admin)</span>
+              <span class="quick-account-meta">HOD CSE · Admin Dashboard</span>
+            </button>
+            <button type="button" class="quick-account-btn" data-email="neha.agarwal@miet.ac.in" data-pass="miet123">
+              <span class="quick-account-name">Dr. Neha Agarwal (Admin)</span>
+              <span class="quick-account-meta">Academic Coordinator · Admin</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="/static/js/login.js"></script>
+</body>
+</html>

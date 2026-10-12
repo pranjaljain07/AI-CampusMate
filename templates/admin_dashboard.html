@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Faculty &amp; Admin Console | AI CampusMate (MIET)</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div>
+        <div class="sidebar-brand">
+          <span class="sidebar-brand-title">AI CampusMate</span>
+          <span class="sidebar-brand-sub">MIET Faculty Admin Console</span>
+        </div>
+
+        <nav class="sidebar-nav" aria-label="Administrator Modules">
+          <button type="button" class="sidebar-link active" data-tab="students">G. Student Directory (CS-5)</button>
+          <button type="button" class="sidebar-link" data-tab="attendance">D. Attendance Manager</button>
+          <button type="button" class="sidebar-link" data-tab="results">E. Results &amp; SGPA/CGPA</button>
+          <button type="button" class="sidebar-link" data-tab="notices">A. Notices &amp; Circulars</button>
+          <button type="button" class="sidebar-link" data-tab="assignments">B. Assignments Manager</button>
+          <button type="button" class="sidebar-link" data-tab="timetable">C. Timetable Manager</button>
+          <button type="button" class="sidebar-link" data-tab="events">F. Campus Events</button>
+        </nav>
+      </div>
+
+      <div class="sidebar-footer">
+        <div id="admin-name-display" class="sidebar-user-name">Administrator</div>
+        <div id="admin-role-display" class="sidebar-user-meta">Department of CSE · MIET</div>
+        <button type="button" id="admin-logout-btn" class="btn btn-secondary btn-block btn-sm">Sign Out</button>
+      </div>
+    </aside>
+
+    <div class="workspace-main">
+      <header class="topbar">
+        <a href="/admin/dashboard" class="topbar-brand">MIET Administration</a>
+
+        <nav class="topbar-nav">
+          <button type="button" class="topbar-nav-link active" data-tab="students">Students</button>
+          <button type="button" class="topbar-nav-link" data-tab="attendance">Attendance</button>
+          <button type="button" class="topbar-nav-link" data-tab="results">Results</button>
+          <button type="button" class="topbar-nav-link" data-tab="notices">Notices</button>
+          <button type="button" class="topbar-nav-link" data-tab="timetable">Timetable</button>
+        </nav>
+
+        <div class="topbar-actions">
+          <button type="button" id="refresh-admin-btn" class="btn btn-secondary btn-sm">Sync MySQL Data</button>
+        </div>
+      </header>
+
+      <main class="viewport-container">
+        <div id="admin-toast" class="alert-banner alert-success hidden"></div>
+
+        <div class="kpi-strip">
+          <div class="kpi-cell">
+            <div class="kpi-label">CS Semester 5 Students</div>
+            <div id="admin-kpi-students" class="kpi-value">4</div>
+            <div class="kpi-sub">Gauri · Harshi · Pranjal · Manvi</div>
+          </div>
+          <div class="kpi-cell">
+            <div class="kpi-label">Active Circulars</div>
+            <div id="admin-kpi-notices" class="kpi-value">0</div>
+            <div class="kpi-sub">Published in MySQL</div>
+          </div>
+          <div class="kpi-cell">
+            <div class="kpi-label">Active Assignments</div>
+            <div id="admin-kpi-assignments" class="kpi-value">0</div>
+            <div class="kpi-sub">CS Semester 5 Coursework</div>
+          </div>
+          <div class="kpi-cell">
+            <div class="kpi-label">Scheduled Lectures</div>
+            <div id="admin-kpi-timetable" class="kpi-value">0</div>
+            <div class="kpi-sub">Weekly Slots in Timetable</div>
+          </div>
+        </div>
+
+        <!-- MODULE G: STUDENT DIRECTORY & ACADEMIC INFORMATION -->
+        <section id="admin-tab-students" class="admin-panel">
+          <div class="section-header">
+            <div>
+              <h1 class="section-title">Student Management &amp; Academic Standing (CS · Semester 5)</h1>
+              <p class="section-subtitle">Live MySQL records for Gauri, Harshi, Pranjal, and Manvi. Click any student's quick action to manage their attendance or marks.</p>
+            </div>
+          </div>
+
+          <div class="surface-panel">
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Roll Number</th>
+                    <th>Student Name</th>
+                    <th>Email</th>
+                    <th>Branch &amp; Sem</th>
+                    <th class="num-col">Aggregate Attendance</th>
+                    <th class="num-col">SGPA</th>
+                    <th class="num-col">CGPA</th>
+                    <th>Faculty Advisor</th>
+                    <th>Quick Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-students-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- MODULE D: ATTENDANCE MANAGEMENT -->
+        <section id="admin-tab-attendance" class="admin-panel hidden">
+          <div class="section-header">
+            <div>
+              <h1 class="section-title">Student Attendance Management</h1>
+              <p class="section-subtitle">Select student and subject to increment/decrement classes or update exact attendance counts in MySQL.</p>
+            </div>
+            <div class="segmented-bar" id="att-student-selector"></div>
+          </div>
+
+          <div class="surface-panel">
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Student</th>
+                    <th>Code</th>
+                    <th>Subject</th>
+                    <th class="num-col">Attended</th>
+                    <th class="num-col">Total Classes</th>
+                    <th class="num-col">Percentage</th>
+                    <th>Status</th>
+                    <th>Increment / Decrement &amp; Direct Update</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-attendance-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- MODULE E: RESULTS & SGPA/CGPA MANAGEMENT -->
+        <section id="admin-tab-results" class="admin-panel hidden">
+          <div class="section-header">
+            <div>
+              <h1 class="section-title">Examination Results, Internal/External Marks &amp; SGPA/CGPA</h1>
+              <p class="section-subtitle">Update subject marks and automatically recalculate or set student SGPA &amp; CGPA in MySQL.</p>
+            </div>
+            <div class="segmented-bar" id="res-student-selector"></div>
+          </div>
+
+          <div class="surface-panel">
+            <div class="panel-header">
+              <h2 id="res-student-heading" class="panel-title">Student Marks Ledger</h2>
+              <div id="res-student-gpa-badge" class="meta-inline"></div>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Code</th>
+                    <th>Subject</th>
+                    <th class="num-col">Credits</th>
+                    <th class="num-col">Internal (Max 30)</th>
+                    <th class="num-col">External (Max 70)</th>
+                    <th class="num-col">Total (100)</th>
+                    <th>Grade</th>
+                    <th>Save to MySQL</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-results-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- MODULE A: NOTICES & CIRCULARS MANAGEMENT -->
+        <section id="admin-tab-notices" class="admin-panel hidden">
+          <div class="section-header">
+            <div>
+              <h1 class="section-title">Manage College Notices &amp; Official Circulars</h1>
+              <p class="section-subtitle">Publish new notices, mark circulars as important, edit existing items, or delete outdated notices.</p>
+            </div>
+          </div>
+
+          <div class="grid-2col">
+            <div class="surface-panel">
+              <div class="panel-header">
+                <h2 class="panel-title">Published Notices in MySQL</h2>
+              </div>
+              <div id="admin-notices-list" class="feed-list"></div>
+            </div>
+
+            <div class="surface-panel">
+              <div class="panel-header">
+                <h2 id="notice-form-title" class="panel-title">Add New Circular</h2>
+                <button type="button" id="notice-reset-btn" class="btn btn-secondary btn-sm">Clear Form</button>
+              </div>
+              <form id="admin-notice-form">
+                <input type="hidden" id="notice-id" />
+                <div class="form-group">
+                  <label class="form-label">Reference Number</label>
+                  <input type="text" id="notice-ref" class="form-input" placeholder="MIET/ACAD/2026/125" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Notice Title</label>
+                  <input type="text" id="notice-title" class="form-input" placeholder="Enter circular title" required />
+                </div>
+                <div class="grid-equal" style="margin-bottom: 0; gap: 0.75rem;">
+                  <div class="form-group">
+                    <label class="form-label">Category</label>
+                    <select id="notice-category" class="form-select">
+                      <option value="Academic">Academic</option>
+                      <option value="Examination">Examination</option>
+                      <option value="Placement & Training">Placement &amp; Training</option>
+                      <option value="Administration">Administration</option>
+                      <option value="Library">Library</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Compliance Deadline</label>
+                    <input type="date" id="notice-deadline" class="form-input" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Circular Content</label>
+                  <textarea id="notice-content" rows="4" class="form-textarea" placeholder="Write complete circular details..." required></textarea>
+                </div>
+                <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem;">
+                  <input type="checkbox" id="notice-important" />
+                  <label for="notice-important" style="font-size: 13px; font-weight: 600;">Mark as High-Priority / Important Circular</label>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Save Notice to MySQL</button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <!-- MODULE B: ASSIGNMENTS MANAGEMENT -->
+        <section id="admin-tab-assignments" class="admin-panel hidden">
+          <div class="section-header">
+            <div>
+              <h1 class="section-title">Coursework &amp; Assignments Management</h1>
+              <p class="section-subtitle">Create, edit, or delete CS Semester 5 assignments in MySQL.</p>
+            </div>
+          </div>
+
+          <div class="grid-2col">
+            <div class="surface-panel">
+              <div class="panel-header">
+                <h2 class="panel-title">Active CS Semester 5 Assignments</h2>
+              </div>
+              <div id="admin-assignments-list" class="feed-list"></div>
+            </div>
+
+            <div class="surface-panel">
+              <div class="panel-header">
+                <h2 id="assignment-form-title" class="panel-title">Add New Assignment</h2>
+                <button type="button" id="assignment-reset-btn" class="btn btn-secondary btn-sm">Clear</button>
+              </div>
+              <form id="admin-assignment-form">
+                <input type="hidden" id="assignment-id" />
+                <div class="grid-equal" style="margin-bottom: 0; gap: 0.75rem;">
+                  <div class="form-group">
+                    <label class="form-label">Subject Code</label>
+                    <input type="text" id="assignment-code" class="form-input" value="BCS501" required />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Maximum Marks</label>
+                    <input type="number" id="assignment-marks" class="form-input" value="20" required />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Subject Name</label>
+                  <input type="text" id="assignment-subject" class="form-input" value="Database Management Systems" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Assignment Title</label>
+                  <input type="text" id="assignment-title" class="form-input" placeholder="e.g. SQL Query Optimization Lab" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Submission Deadline</label>
+                  <input type="date" id="assignment-deadline" class="form-input" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Description &amp; Instructions</label>
+                  <textarea id="assignment-desc" rows="3" class="form-textarea" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Save Assignment to MySQL</button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <!-- MODULE C: TIMETABLE MANAGEMENT -->
+        <section id="admin-tab-timetable" class="admin-panel hidden">
+          <div class="section-header">
+            <div>
+              <h1 class="section-title">Weekly Timetable Management (CS · Semester 5)</h1>
+              <p class="section-subtitle">Add, update, or remove lectures, labs, and tutorials in MySQL.</p>
+            </div>
+          </div>
+
+          <div class="grid-2col">
+            <div class="surface-panel">
+              <div class="panel-header">
+                <h2 class="panel-title">Scheduled Lectures &amp; Labs</h2>
+              </div>
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Day</th>
+                      <th>Time Slot</th>
+                      <th>Subject</th>
+                      <th>Faculty</th>
+                      <th>Room</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="admin-timetable-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="surface-panel">
+              <div class="panel-header">
+                <h2 id="timetable-form-title" class="panel-title">Add Lecture Slot</h2>
+                <button type="button" id="timetable-reset-btn" class="btn btn-secondary btn-sm">Clear</button>
+              </div>
+              <form id="admin-timetable-form">
+                <input type="hidden" id="tt-id" />
+                <div class="grid-equal" style="margin-bottom: 0; gap: 0.75rem;">
+                  <div class="form-group">
+                    <label class="form-label">Day of Week</label>
+                    <select id="tt-day" class="form-select">
+                      <option value="Monday">Monday</option>
+                      <option value="Tuesday">Tuesday</option>
+                      <option value="Wednesday">Wednesday</option>
+                      <option value="Thursday">Thursday</option>
+                      <option value="Friday">Friday</option>
+                      <option value="Saturday">Saturday</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Session Type</label>
+                    <select id="tt-type" class="form-select">
+                      <option value="Lecture">Lecture</option>
+                      <option value="Lab">Lab</option>
+                      <option value="Tutorial">Tutorial</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="grid-equal" style="margin-bottom: 0; gap: 0.75rem;">
+                  <div class="form-group">
+                    <label class="form-label">Subject Code</label>
+                    <input type="text" id="tt-code" class="form-input" value="BCS501" required />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Classroom / Lab</label>
+                    <input type="text" id="tt-room" class="form-input" value="Room A-301" required />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Subject Name</label>
+                  <input type="text" id="tt-subject" class="form-input" value="Database Management Systems" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Faculty Name</label>
+                  <input type="text" id="tt-faculty" class="form-input" value="Dr. Neha Agarwal" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Time Slot Display</label>
+                  <input type="text" id="tt-slot" class="form-input" value="09:00 AM - 10:00 AM" required />
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Save Lecture to MySQL</button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <!-- MODULE F: CAMPUS EVENTS MANAGEMENT -->
+        <section id="admin-tab-events" class="admin-panel hidden">
+          <div class="section-header">
+            <div>
+              <h1 class="section-title">Campus Events, Seminars &amp; Hackathons</h1>
+              <p class="section-subtitle">Manage upcoming MIET events stored in MySQL.</p>
+            </div>
+          </div>
+
+          <div class="grid-2col">
+            <div class="surface-panel">
+              <div class="panel-header">
+                <h2 class="panel-title">Scheduled Campus Events</h2>
+              </div>
+              <div id="admin-events-list" class="feed-list"></div>
+            </div>
+
+            <div class="surface-panel">
+              <div class="panel-header">
+                <h2 id="event-form-title" class="panel-title">Add Campus Event</h2>
+                <button type="button" id="event-reset-btn" class="btn btn-secondary btn-sm">Clear</button>
+              </div>
+              <form id="admin-event-form">
+                <input type="hidden" id="event-id" />
+                <div class="form-group">
+                  <label class="form-label">Event Title</label>
+                  <input type="text" id="event-title" class="form-input" required />
+                </div>
+                <div class="grid-equal" style="margin-bottom: 0; gap: 0.75rem;">
+                  <div class="form-group">
+                    <label class="form-label">Category</label>
+                    <input type="text" id="event-category" class="form-input" value="Technical Seminar" required />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Event Date</label>
+                    <input type="date" id="event-date" class="form-input" required />
+                  </div>
+                </div>
+                <div class="grid-equal" style="margin-bottom: 0; gap: 0.75rem;">
+                  <div class="form-group">
+                    <label class="form-label">Event Time</label>
+                    <input type="text" id="event-time" class="form-input" value="10:00 AM Onwards" required />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Venue</label>
+                    <input type="text" id="event-venue" class="form-input" value="MIET Main Auditorium" required />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Organizer</label>
+                  <input type="text" id="event-organizer" class="form-input" value="Department of CSE, MIET" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Description</label>
+                  <textarea id="event-desc" rows="3" class="form-textarea" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Save Event to MySQL</button>
+              </form>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="/static/js/admin.js"></script>
+</body>
+</html>
